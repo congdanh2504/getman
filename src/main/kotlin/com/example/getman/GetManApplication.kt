@@ -1,6 +1,7 @@
 package com.example.getman
 
 import com.example.getman.controllers.LoginController
+import com.example.getman.di.appModule
 import com.example.getman.utils.Navigator
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
@@ -8,15 +9,14 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import org.koin.core.context.startKoin
 import org.kordamp.bootstrapfx.BootstrapFX
 
-class HelloApplication : Application(), Navigator {
-    private lateinit var job: Job
+class GetManApplication : Application(), Navigator {
     private lateinit var primaryStage: Stage
     val applicationScope: CoroutineScope
-        get() = CoroutineScope(Dispatchers.Main + job)
+        get() = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun init() {
         super.init()
@@ -27,7 +27,6 @@ class HelloApplication : Application(), Navigator {
     }
 
     override fun start(stage: Stage) {
-        job = Job()
         primaryStage = stage
         navigateToLogin()
     }
@@ -45,7 +44,7 @@ class HelloApplication : Application(), Navigator {
     }
 
     private fun loadFxml(fileName: String, width: Double, height: Double, title: String) {
-        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource(fileName))
+        val fxmlLoader = FXMLLoader(GetManApplication::class.java.getResource(fileName))
         val scene = Scene(fxmlLoader.load(), width, height)
         scene.stylesheets.add(BootstrapFX.bootstrapFXStylesheet());
         primaryStage.title = title
@@ -53,17 +52,12 @@ class HelloApplication : Application(), Navigator {
         primaryStage.show()
     }
 
-    override fun stop() {
-        super.stop()
-        job.cancel()
-    }
-
     companion object {
-        lateinit var instance: HelloApplication
+        lateinit var instance: GetManApplication
             private set
     }
 }
 
 fun main() {
-    Application.launch(HelloApplication::class.java)
+    Application.launch(GetManApplication::class.java)
 }

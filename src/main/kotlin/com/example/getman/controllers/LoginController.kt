@@ -1,24 +1,38 @@
 package com.example.getman.controllers
 
-import com.example.getman.HelloApplication
-import javafx.event.ActionEvent
+import com.example.getman.GetManApplication
+import com.example.getman.domain.model.User
+import com.example.getman.domain.repository.UserRepository
+import com.example.getman.utils.applicationScope
 import javafx.scene.control.Button
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
+import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class LoginController {
+class LoginController: KoinComponent {
 
     lateinit var registerButton: Button
     lateinit var loginButton: Button
     lateinit var passwordField: PasswordField
     lateinit var usernameField: TextField
 
-    fun handleLogin(actionEvent: ActionEvent) {
-        HelloApplication.instance.navigateToHome()
+    private val userRepository: UserRepository by inject()
+
+    fun handleLogin() {
+        GetManApplication.instance.navigateToHome()
     }
 
-    fun handleRegister(actionEvent: ActionEvent) {
-
+    fun handleRegister() {
+        applicationScope.launch {
+            val user = User(
+                username = "congdanh2",
+                email = "danhuchiha2002@gmail.com",
+                password = "123123"
+            )
+            userRepository.saveUser(user)
+        }
     }
 
     companion object {

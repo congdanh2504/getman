@@ -1,5 +1,5 @@
 package com.example.getman.utils
 
-import com.example.getman.HelloApplication
+import com.example.getman.GetManApplication
 
-val applicationScope = HelloApplication.instance.applicationScope
+val applicationScope = GetManApplication.instance.applicationScope
