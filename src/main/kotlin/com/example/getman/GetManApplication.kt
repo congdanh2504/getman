@@ -2,21 +2,24 @@ package com.example.getman
 
 import com.example.getman.controllers.LoginController
 import com.example.getman.di.appModule
+import com.example.getman.domain.repository.LocalRepository
 import com.example.getman.utils.Navigator
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
+import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
+import org.koin.core.inject
 import org.kordamp.bootstrapfx.BootstrapFX
 
-class GetManApplication : Application(), Navigator {
+class GetManApplication : Application(), Navigator, KoinComponent {
     private lateinit var primaryStage: Stage
     val applicationScope: CoroutineScope
         get() = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    private val localRepository: LocalRepository by inject()
 
     override fun init() {
         super.init()
@@ -28,7 +31,16 @@ class GetManApplication : Application(), Navigator {
 
     override fun start(stage: Stage) {
         primaryStage = stage
-        navigateToLogin()
+        applicationScope.launch {
+            val localUser = localRepository.getUser()
+            withContext(Dispatchers.Main) {
+                if (localUser != null) {
+                    navigateToHome()
+                } else {
+                    navigateToLogin()
+                }
+            }
+        }
     }
 
     override fun navigateToLogin() {

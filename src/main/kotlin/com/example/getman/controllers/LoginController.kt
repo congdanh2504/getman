@@ -2,6 +2,7 @@ package com.example.getman.controllers
 
 import com.example.getman.GetManApplication
 import com.example.getman.domain.model.User
+import com.example.getman.domain.repository.LocalRepository
 import com.example.getman.domain.repository.UserRepository
 import com.example.getman.utils.applicationScope
 import javafx.scene.control.Button
@@ -19,6 +20,7 @@ class LoginController: KoinComponent {
     lateinit var usernameField: TextField
 
     private val userRepository: UserRepository by inject()
+    private val localRepository: LocalRepository by inject()
 
     fun handleLogin() {
         GetManApplication.instance.navigateToHome()
@@ -31,7 +33,7 @@ class LoginController: KoinComponent {
                 email = "danhuchiha2002@gmail.com",
                 password = "123123"
             )
-            userRepository.saveUser(user)
+            localRepository.saveUser(user)
         }
     }
 

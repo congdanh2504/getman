@@ -21,5 +21,11 @@ data class UserEntity(
 fun User.toUserEntity() = UserEntity(
     username = username,
     email = email,
-    password = password
+    password = password ?: ""
+)
+
+fun UserEntity.toUser() = User(
+    id = id,
+    username = username,
+    email = email
 )
