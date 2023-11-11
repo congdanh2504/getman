@@ -7,7 +7,6 @@ module com.example.getman {
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
-    requires validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
@@ -18,6 +17,7 @@ module com.example.getman {
     requires koin.core;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires net.synedra.validatorfx;
 
     opens com.example.getman to javafx.fxml;
     exports com.example.getman;

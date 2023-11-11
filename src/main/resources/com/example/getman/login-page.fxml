@@ -6,7 +6,7 @@
 <VBox fx:controller="com.example.getman.controllers.LoginController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER"
       spacing="20" style="-fx-background-color: #f0f0f0; -fx-padding: 20;">
     <Label text="Login page" styleClass="h1, lbl, lbl-primary" style="-fx-font-size: 24px; -fx-text-fill: #ffffff;" />
-    <TextField fx:id="usernameField" promptText="Username" style="-fx-pref-width: 200px;" styleClass="form-control"/>
+    <TextField fx:id="emailField" promptText="Email" style="-fx-pref-width: 200px;" styleClass="form-control"/>
     <PasswordField fx:id="passwordField" promptText="Password" style="-fx-pref-width: 200px;" styleClass="form-control"/>
     <HBox spacing="10">
         <Button fx:id="loginButton" text="Login" onAction="#handleLogin" styleClass="btn, btn-primary"/>

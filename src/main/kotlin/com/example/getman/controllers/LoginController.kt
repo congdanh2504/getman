@@ -5,6 +5,7 @@ import com.example.getman.domain.model.User
 import com.example.getman.domain.repository.LocalRepository
 import com.example.getman.domain.repository.UserRepository
 import com.example.getman.utils.applicationScope
+import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
@@ -17,24 +18,30 @@ class LoginController: KoinComponent {
     lateinit var registerButton: Button
     lateinit var loginButton: Button
     lateinit var passwordField: PasswordField
-    lateinit var usernameField: TextField
+    lateinit var emailField: TextField
 
     private val userRepository: UserRepository by inject()
     private val localRepository: LocalRepository by inject()
 
     fun handleLogin() {
-        GetManApplication.instance.navigateToHome()
+        applicationScope.launch {
+            val user = userRepository.login(emailField.text, passwordField.text)
+            if (user != null) {
+                localRepository.saveUser(user)
+                GetManApplication.instance.navigateToHome()
+            } else {
+                Alert(Alert.AlertType.ERROR).apply {
+                    title = "Error"
+                    contentText = "Invalid email or password"
+                }.also {
+                    it.show()
+                }
+            }
+        }
     }
 
     fun handleRegister() {
-        applicationScope.launch {
-            val user = User(
-                username = "congdanh2",
-                email = "danhuchiha2002@gmail.com",
-                password = "123123"
-            )
-            localRepository.saveUser(user)
-        }
+        GetManApplication.instance.navigateToRegister()
     }
 
     companion object {

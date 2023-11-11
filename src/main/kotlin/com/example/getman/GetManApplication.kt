@@ -1,6 +1,7 @@
 package com.example.getman
 
 import com.example.getman.controllers.LoginController
+import com.example.getman.controllers.RegisterController
 import com.example.getman.di.appModule
 import com.example.getman.domain.repository.LocalRepository
 import com.example.getman.utils.Navigator
@@ -17,7 +18,7 @@ import org.kordamp.bootstrapfx.BootstrapFX
 class GetManApplication : Application(), Navigator, KoinComponent {
     private lateinit var primaryStage: Stage
     val applicationScope: CoroutineScope
-        get() = CoroutineScope(Dispatchers.IO + SupervisorJob())
+        get() = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private val localRepository: LocalRepository by inject()
 
@@ -48,11 +49,11 @@ class GetManApplication : Application(), Navigator, KoinComponent {
     }
 
     override fun navigateToHome() {
-        loadFxml(HelloController.FXML_VIEW_NAME, 700.0, 500.0, "Hello!")
+        loadFxml(HelloController.FXML_VIEW_NAME, 700.0, 500.0, "Main")
     }
 
     override fun navigateToRegister() {
-
+        loadFxml(RegisterController.FXML_VIEW_NAME, 320.0, 300.0, "Register")
     }
 
     private fun loadFxml(fileName: String, width: Double, height: Double, title: String) {

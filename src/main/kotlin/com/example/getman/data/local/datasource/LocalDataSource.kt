@@ -50,6 +50,6 @@ class LocalDataSource {
     }
 
     companion object {
-        const val FILE_NAME = "user.txt"
+        private const val FILE_NAME = "user.txt"
     }
 }
