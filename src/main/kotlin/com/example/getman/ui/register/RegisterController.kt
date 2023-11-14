@@ -1,20 +1,19 @@
-package com.example.getman.controllers
+package com.example.getman.ui.register
 
 import com.example.getman.GetManApplication
+import com.example.getman.base.Screen
 import com.example.getman.domain.model.User
 import com.example.getman.domain.repository.UserRepository
-import com.example.getman.utils.applicationScope
+import com.example.getman.extensions.collectIn
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.Button
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
-import kotlinx.coroutines.launch
 import net.synedra.validatorfx.Validator
-import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class RegisterController : KoinComponent {
+class RegisterController : Screen() {
 
     lateinit var registerButton: Button
     lateinit var rePasswordField: PasswordField
@@ -22,26 +21,15 @@ class RegisterController : KoinComponent {
     lateinit var emailField: TextField
     lateinit var usernameField: TextField
 
+    override val viewModel by inject<RegisterViewModel>()
+
     private val userRepository: UserRepository by inject()
 
-    fun handleRegister() {
-        if (!validateData()) return
-        applicationScope.launch {
-            val userWithEmail = userRepository.getUserByEmail(emailField.text)
-            if (userWithEmail != null) {
-                Alert(AlertType.ERROR).apply {
-                    title = "Error"
-                    contentText = "Email is used by another user"
-                }.also {
-                    it.show()
-                }
-            } else {
-                val user = User(
-                    username = usernameField.text,
-                    email = emailField.text,
-                    password = passwordField.text
-                )
-                if (userRepository.saveUser(user)) {
+    override fun onCreate() {
+        super.onCreate()
+        viewModel.registerState.collectIn(this) { state ->
+            when (state) {
+                RegisterUiState.Success -> {
                     Alert(AlertType.INFORMATION).apply {
                         title = "Successfully"
                         contentText = "Register successfully"
@@ -51,16 +39,31 @@ class RegisterController : KoinComponent {
                             GetManApplication.instance.navigateToLogin()
                         }
                     }
-                } else {
+                }
+
+                is RegisterUiState.Error -> {
                     Alert(AlertType.ERROR).apply {
                         title = "Error"
-                        contentText = "Register error"
+                        contentText = state.message
                     }.also {
                         it.show()
                     }
                 }
+
+                else -> {}
             }
         }
+    }
+
+    fun handleRegister() {
+        if (!validateData()) return
+        viewModel.register(
+            User(
+                username = usernameField.text,
+                email = emailField.text,
+                password = passwordField.text
+            )
+        )
     }
 
     private fun validateData(): Boolean {
@@ -122,6 +125,7 @@ class RegisterController : KoinComponent {
 
     fun handleCancel() {
         GetManApplication.instance.navigateToLogin()
+        onDestroy()
     }
 
     companion object {

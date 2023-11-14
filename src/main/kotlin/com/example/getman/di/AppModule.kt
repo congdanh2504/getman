@@ -7,6 +7,8 @@ import com.example.getman.data.remote.datasource.UserDao
 import com.example.getman.data.remote.repository.UserRepositoryImpl
 import com.example.getman.domain.repository.LocalRepository
 import com.example.getman.domain.repository.UserRepository
+import com.example.getman.ui.login.LoginViewModel
+import com.example.getman.ui.register.RegisterViewModel
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 
@@ -17,4 +19,6 @@ val appModule = module {
     single<UserRepository> { UserRepositoryImpl(get()) }
     single { OkHttpClient() }
     single { Network(get()) }
+    factory { LoginViewModel(get(), get()) }
+    factory { RegisterViewModel(get()) }
 }

@@ -21,6 +21,7 @@ module com.example.getman {
 
     opens com.example.getman to javafx.fxml;
     exports com.example.getman;
-    exports com.example.getman.controllers;
+    opens com.example.getman.ui.login to javafx.fxml;
+    opens com.example.getman.ui.register to javafx.fxml;
     opens com.example.getman.data.remote.model to org.hibernate.orm.core;
 }

@@ -1,7 +1,7 @@
 package com.example.getman
 
-import com.example.getman.controllers.LoginController
-import com.example.getman.controllers.RegisterController
+import com.example.getman.ui.login.LoginScreen
+import com.example.getman.ui.register.RegisterController
 import com.example.getman.di.appModule
 import com.example.getman.domain.repository.LocalRepository
 import com.example.getman.utils.Navigator
@@ -34,18 +34,16 @@ class GetManApplication : Application(), Navigator, KoinComponent {
         primaryStage = stage
         applicationScope.launch {
             val localUser = localRepository.getUser()
-            withContext(Dispatchers.Main) {
-                if (localUser != null) {
-                    navigateToHome()
-                } else {
-                    navigateToLogin()
-                }
+            if (localUser != null) {
+                navigateToHome()
+            } else {
+                navigateToLogin()
             }
         }
     }
 
     override fun navigateToLogin() {
-        loadFxml(LoginController.FXML_VIEW_NAME, 320.0, 240.0, "Login")
+        loadFxml(LoginScreen.FXML_VIEW_NAME, 320.0, 240.0, "Login")
     }
 
     override fun navigateToHome() {
