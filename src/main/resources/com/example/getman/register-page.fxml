@@ -1,17 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:controller="com.example.getman.ui.register.RegisterController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER"
-      spacing="20" style="-fx-background-color: #f0f0f0; -fx-padding: 20;">
-    <Label text="Register page" styleClass="h1, lbl, lbl-primary" style="-fx-font-size: 24px; -fx-text-fill: #ffffff;" />
-    <TextField fx:id="usernameField" promptText="Username" style="-fx-pref-width: 200px;" styleClass="form-control"/>
-    <TextField fx:id="emailField" promptText="Email" style="-fx-pref-width: 200px;" styleClass="form-control"/>
-    <PasswordField fx:id="passwordField" promptText="Password" style="-fx-pref-width: 200px;" styleClass="form-control"/>
-    <PasswordField fx:id="rePasswordField" promptText="Confirm password" style="-fx-pref-width: 200px;" styleClass="form-control"/>
-    <HBox spacing="10">
-        <Button fx:id="registerButton" text="Register" onAction="#handleRegister" styleClass="btn, btn-primary"/>
-        <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel" styleClass="btn, btn-secondary"/>
-    </HBox>
-</VBox>
+<GridPane fx:controller="com.example.getman.ui.register.RegisterScreen" maxHeight="-Infinity" maxWidth="-Infinity"
+          minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0"
+          xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff;"
+              GridPane.columnIndex="1">
+            <padding>
+                <Insets bottom="15" left="60" right="60" top="15"/>
+            </padding>
+            <children>
+                <Label cache="true" style="-fx-alignment: center-left;" text="Register">
+                    <font>
+                        <Font name="SansSerif Bold" size="36.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20"/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="usernameField" prefHeight="44.0" prefWidth="330.0" promptText="Username">
+                    <VBox.margin>
+                        <Insets bottom="20"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0"/>
+                    </font>
+                </TextField>
+                <TextField fx:id="emailField" prefHeight="44.0" prefWidth="330.0" promptText="Email">
+                    <VBox.margin>
+                        <Insets bottom="20"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0"/>
+                    </font>
+                </TextField>
+                <PasswordField fx:id="passwordField" prefHeight="44.0" prefWidth="330.0" promptText="Password">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20"/>
+                    </VBox.margin>
+                </PasswordField>
+                <PasswordField fx:id="rePasswordField" prefHeight="44.0" prefWidth="330.0" promptText="Confirm password">
+                    <font>
+                        <Font name="SansSerif Regular" size="14.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20"/>
+                    </VBox.margin>
+                </PasswordField>
+                <Button fx:id="registerButton" alignment="CENTER" focusTraversable="false" mnemonicParsing="false"
+                        prefHeight="40.0" prefWidth="330.0" style="-fx-background-color: #687EFF;" text="Register"
+                        textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font name="SansSerif Bold" size="12.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="SansSerif Bold" size="14.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="cancelButton" focusTraversable="false" prefHeight="40.0" prefWidth="330.0"
+                        style="-fx-background-color: #B6FFFA;" text="Have an account" textFill="#687eff">
+                    <font>
+                        <Font name="SansSerif Bold" size="14.0"/>
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #687EFF;">
+            <Label text="GetMan" textFill="#b6fffa" BorderPane.alignment="CENTER">
+                <font>
+                    <Font name="SansSerif Bold" size="72.0"/>
+                </font>
+            </Label>
+            <Label text="API testing platform" textFill="#b6fffa" BorderPane.alignment="CENTER">
+                <font>
+                    <Font name="SansSerif Bold" size="24.0"/>
+                </font>
+            </Label>
+        </VBox>
+    </children>
+</GridPane>

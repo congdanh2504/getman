@@ -3,7 +3,6 @@ package com.example.getman.ui.register
 import com.example.getman.GetManApplication
 import com.example.getman.base.Screen
 import com.example.getman.domain.model.User
-import com.example.getman.domain.repository.UserRepository
 import com.example.getman.extensions.collectIn
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
@@ -13,49 +12,63 @@ import javafx.scene.control.TextField
 import net.synedra.validatorfx.Validator
 import org.koin.core.inject
 
-class RegisterController : Screen() {
+class RegisterScreen : Screen() {
 
+    lateinit var cancelButton: Button
     lateinit var registerButton: Button
     lateinit var rePasswordField: PasswordField
     lateinit var passwordField: PasswordField
     lateinit var emailField: TextField
     lateinit var usernameField: TextField
-
     override val viewModel by inject<RegisterViewModel>()
-
-    private val userRepository: UserRepository by inject()
 
     override fun onCreate() {
         super.onCreate()
-        viewModel.registerState.collectIn(this) { state ->
-            when (state) {
-                RegisterUiState.Success -> {
-                    Alert(AlertType.INFORMATION).apply {
-                        title = "Successfully"
-                        contentText = "Register successfully"
-                    }.also {
-                        it.show()
-                        it.setOnHidden {
-                            GetManApplication.instance.navigateToLogin()
-                        }
-                    }
-                }
+        initListeners()
+        bindViewModel()
+    }
 
-                is RegisterUiState.Error -> {
-                    Alert(AlertType.ERROR).apply {
-                        title = "Error"
-                        contentText = state.message
-                    }.also {
-                        it.show()
-                    }
-                }
-
-                else -> {}
-            }
+    private fun initListeners() {
+        registerButton.setOnAction {
+            handleRegister()
+        }
+        cancelButton.setOnAction {
+            handleCancel()
         }
     }
 
-    fun handleRegister() {
+    private fun bindViewModel() = viewModel.run {
+        registerState.collectIn(this@RegisterScreen, ::handleRegisterState)
+    }
+
+    private fun handleRegisterState(state: RegisterUiState) {
+        when (state) {
+            RegisterUiState.Success -> {
+                Alert(AlertType.INFORMATION).apply {
+                    title = "Successfully"
+                    contentText = "Register successfully"
+                }.also {
+                    it.show()
+                    it.setOnHidden {
+                        GetManApplication.instance.navigateToLogin()
+                    }
+                }
+            }
+
+            is RegisterUiState.Error -> {
+                Alert(AlertType.ERROR).apply {
+                    title = "Error"
+                    contentText = state.message
+                }.also {
+                    it.show()
+                }
+            }
+
+            else -> {}
+        }
+    }
+
+    private fun handleRegister() {
         if (!validateData()) return
         viewModel.register(
             User(
@@ -123,7 +136,7 @@ class RegisterController : Screen() {
         return validator.validate()
     }
 
-    fun handleCancel() {
+    private fun handleCancel() {
         GetManApplication.instance.navigateToLogin()
         onDestroy()
     }

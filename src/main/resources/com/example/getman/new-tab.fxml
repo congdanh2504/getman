@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.image.ImageView?>
+<Tab xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.getman.ui.main.TabScreen">
+    <graphic>
+        <HBox alignment="CENTER">
+            <Label text="Untitled tab"/>
+            <Label text=" X" fx:id="closeLabel" style="-fx-text-fill: red;"/>
+        </HBox>
+    </graphic>
+    <content>
+        <BorderPane>
+            <top>
+                <HBox spacing="10" xmlns:fx="http://javafx.com/fxml">
+                    <padding>
+                        <Insets top="15" right="12" bottom="15" left="12"/>
+                    </padding>
+                    <ChoiceBox fx:id="cbRequest" HBox.hgrow="NEVER" styleClass="bg-white"/>
+                    <TextField fx:id="tfUrl" HBox.hgrow="ALWAYS" styleClass="bg-white"/>
+                    <Button fx:id="btnSend" HBox.hgrow="NEVER" text="Send" styleClass="bg-white"/>
+                </HBox>
+            </top>
+            <center>
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
+                           BorderPane.alignment="CENTER">
+                    <items>
+                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab text="Query Params">
+                                    <content>
+                                        <VBox>
+                                            <TableView fx:id="paramTable">
+                                                <columns>
+                                                    <TableColumn fx:id="paramKeyColumn" text="Key" prefWidth="200">
+                                                    </TableColumn>
+                                                    <TableColumn fx:id="paramValueColumn" text="Value" prefWidth="300">
+                                                    </TableColumn>
+                                                </columns>
+                                            </TableView>
+                                            <HBox>
+                                                <padding>
+                                                    <Insets top="15" right="12" bottom="15" left="12"/>
+                                                </padding>
+                                                <TextField fx:id="tfKey" styleClass="bg-white"/>
+                                                <TextField fx:id="tfValue" styleClass="bg-white"/>
+                                                <Button fx:id="btnAddQuery" text="Add" styleClass="bg-white"/>
+                                                <Button fx:id="btnClearQuery" text="Clear" styleClass="bg-white"/>
+                                            </HBox>
+                                        </VBox>
+
+                                    </content>
+                                </Tab>
+                                <Tab text="Authorization">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                                    prefWidth="200.0"/>
+                                    </content>
+                                </Tab>
+                                <Tab text="Headers">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                                    prefWidth="200.0"/>
+                                    </content>
+                                </Tab>
+                                <Tab text="Body">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                                    prefWidth="200.0"/>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab fx:id="bodyTab" text="Body">
+                                    <content>
+                                        <StackPane>
+                                            <TabPane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0"
+                                                     tabClosingPolicy="UNAVAILABLE">
+                                                <tabs>
+                                                    <Tab text="Pretty">
+                                                        <content>
+                                                            <TextArea fx:id="prettyTextArea"
+                                                                      style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
+                                                        </content>
+                                                    </Tab>
+                                                    <Tab text="Raw">
+                                                        <TextArea fx:id="textArea"
+                                                                  style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
+                                                    </Tab>
+                                                    <Tab text="Preview">
+                                                        <content>
+                                                            <ScrollPane>
+                                                                <WebView fx:id="webview"
+                                                                         style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
+                                                            </ScrollPane>
+                                                        </content>
+                                                    </Tab>
+                                                </tabs>
+                                            </TabPane>
+                                            <ScrollPane visible="false" fx:id="scrollImagePreview">
+                                                <ImageView fx:id="previewImage"/>
+                                            </ScrollPane>
+
+                                        </StackPane>
+
+                                    </content>
+                                </Tab>
+                                <Tab text="Cookie">
+                                    <TableView fx:id="cookieTable">
+                                        <columns>
+                                            <TableColumn fx:id="cookieKeyColumn" text="Key" prefWidth="200">
+                                            </TableColumn>
+                                            <TableColumn fx:id="cookieValueColumn" text="Value" prefWidth="300">
+                                            </TableColumn>
+                                        </columns>
+                                    </TableView>
+                                </Tab>
+                                <Tab text="Headers">
+                                    <TableView fx:id="headersTable">
+                                        <columns>
+                                            <TableColumn fx:id="headerKeyColumn" text="Key" prefWidth="200">
+                                            </TableColumn>
+                                            <TableColumn fx:id="headerValueColumn" text="Value" prefWidth="300">
+                                            </TableColumn>
+                                        </columns>
+                                    </TableView>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </items>
+                </SplitPane>
+            </center>
+        </BorderPane>
+    </content>
+</Tab>

@@ -1,0 +1,25 @@
+package com.example.getman.ui.main
+
+import com.example.getman.base.ViewModel
+import com.example.getman.domain.repository.NetworkRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
+import okhttp3.Response
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class MainViewModel(private val networkRepository: NetworkRepository) : ViewModel() {
+
+    val response: StateFlow<Response?>
+
+    private val _requestTrigger = MutableSharedFlow<String>(extraBufferCapacity = Int.MAX_VALUE)
+
+    init {
+        response = _requestTrigger.flatMapLatest {
+            flow {
+                emit(networkRepository.get(it, emptyMap()))
+            }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+    }
+
+    fun request(url: String) = _requestTrigger.tryEmit(url)
+}

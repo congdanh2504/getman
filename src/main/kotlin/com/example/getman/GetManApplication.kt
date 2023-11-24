@@ -1,9 +1,10 @@
 package com.example.getman
 
 import com.example.getman.ui.login.LoginScreen
-import com.example.getman.ui.register.RegisterController
+import com.example.getman.ui.register.RegisterScreen
 import com.example.getman.di.appModule
 import com.example.getman.domain.repository.LocalRepository
+import com.example.getman.ui.main.MainScreen
 import com.example.getman.utils.Navigator
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
@@ -43,24 +44,43 @@ class GetManApplication : Application(), Navigator, KoinComponent {
     }
 
     override fun navigateToLogin() {
-        loadFxml(LoginScreen.FXML_VIEW_NAME, 320.0, 240.0, "Login")
+        loadFxml(LoginScreen.FXML_VIEW_NAME, "Login")
     }
 
     override fun navigateToHome() {
-        loadFxml(HelloController.FXML_VIEW_NAME, 700.0, 500.0, "Main")
+        loadFxml(MainScreen.FXML_VIEW_NAME, 700.0, 500.0, "Main")
     }
 
     override fun navigateToRegister() {
-        loadFxml(RegisterController.FXML_VIEW_NAME, 320.0, 300.0, "Register")
+        loadFxml(RegisterScreen.FXML_VIEW_NAME, "Register")
     }
 
     private fun loadFxml(fileName: String, width: Double, height: Double, title: String) {
         val fxmlLoader = FXMLLoader(GetManApplication::class.java.getResource(fileName))
         val scene = Scene(fxmlLoader.load(), width, height)
-        scene.stylesheets.add(BootstrapFX.bootstrapFXStylesheet());
+        scene.stylesheets.add(BootstrapFX.bootstrapFXStylesheet())
+        scene.stylesheets.add(GetManApplication::class.java.getResource("StyleSheet.css")?.toExternalForm())
         primaryStage.title = title
         primaryStage.scene = scene
         primaryStage.show()
+    }
+
+    private fun loadFxml(fileName: String, title: String) {
+        val fxmlLoader = FXMLLoader(GetManApplication::class.java.getResource(fileName))
+        val scene = Scene(fxmlLoader.load())
+        scene.stylesheets.add(BootstrapFX.bootstrapFXStylesheet())
+        scene.stylesheets.add(GetManApplication::class.java.getResource("StyleSheet.css")?.toExternalForm())
+        primaryStage.title = title
+        primaryStage.scene = scene
+        primaryStage.show()
+    }
+
+    fun getStyleSheet(fileName: String): String? {
+        return GetManApplication::class.java.getResource(fileName)?.toExternalForm()
+    }
+
+    fun loadFxml(fileName: String): FXMLLoader {
+        return FXMLLoader(GetManApplication::class.java.getResource(fileName))
     }
 
     companion object {

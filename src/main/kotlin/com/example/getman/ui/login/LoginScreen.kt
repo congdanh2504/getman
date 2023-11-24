@@ -8,6 +8,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
 import org.koin.core.inject
+import kotlin.math.log
 
 class LoginScreen : Screen() {
 
@@ -19,37 +20,47 @@ class LoginScreen : Screen() {
 
     override fun onCreate() {
         super.onCreate()
-        viewModel.loginState.collectIn(this) { state ->
-            when (state) {
-                is LoginUiState.Success -> {
-                    viewModel.saveUserToLocal(state.user)
-                }
+        initListeners()
+        bindViewModel()
+    }
 
-                is LoginUiState.Error -> {
-                    Alert(Alert.AlertType.ERROR).apply {
-                        title = "Error"
-                        contentText = state.message
-                    }.show()
-                }
-
-                else -> {}
-            }
+    private fun initListeners() {
+        loginButton.setOnAction {
+            viewModel.login(emailField.text, passwordField.text)
         }
-        viewModel.saveUserState.collectIn(this) {
-            if (it) {
-                GetManApplication.instance.navigateToHome()
-                onDestroy()
-            }
+        registerButton.setOnAction {
+            GetManApplication.instance.navigateToRegister()
+            onDestroy()
         }
     }
 
-    fun handleLogin() {
-        viewModel.login(emailField.text, passwordField.text)
+    private fun bindViewModel() = viewModel.run {
+        loginState.collectIn(this@LoginScreen, ::handleLoginState)
+        saveUserState.collectIn(this@LoginScreen, ::handleSaveUserState)
     }
 
-    fun handleRegister() {
-        GetManApplication.instance.navigateToRegister()
-        onDestroy()
+    private fun handleLoginState(state: LoginUiState) {
+        when (state) {
+            is LoginUiState.Success -> {
+                viewModel.saveUserToLocal(state.user)
+            }
+
+            is LoginUiState.Error -> {
+                Alert(Alert.AlertType.ERROR).apply {
+                    title = "Error"
+                    contentText = state.message
+                }.show()
+            }
+
+            else -> {}
+        }
+    }
+
+    private fun handleSaveUserState(isSaved: Boolean) {
+        if (isSaved) {
+            GetManApplication.instance.navigateToHome()
+            onDestroy()
+        }
     }
 
     companion object {

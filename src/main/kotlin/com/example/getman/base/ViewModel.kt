@@ -6,5 +6,5 @@ import kotlinx.coroutines.Job
 
 open class ViewModel {
     val job = Job()
-    val viewModelScope = CoroutineScope(Dispatchers.Default + job)
+    val viewModelScope = CoroutineScope(Dispatchers.IO + job)
 }
