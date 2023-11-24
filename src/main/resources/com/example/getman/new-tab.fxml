@@ -3,8 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.web.WebView?>
 <?import javafx.scene.image.ImageView?>
 <Tab xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.getman.ui.main.TabScreen">
@@ -53,20 +51,32 @@
                                                 <Button fx:id="btnClearQuery" text="Clear" styleClass="bg-white"/>
                                             </HBox>
                                         </VBox>
-
-                                    </content>
-                                </Tab>
-                                <Tab text="Authorization">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                    prefWidth="200.0"/>
                                     </content>
                                 </Tab>
                                 <Tab text="Headers">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                    prefWidth="200.0"/>
-                                    </content>
+                                    <VBox>
+                                        <TableView fx:id="requestHeadersTable">
+                                            <columns>
+                                                <TableColumn fx:id="requestHeadersKeyColumn" text="Key" prefWidth="200">
+                                                </TableColumn>
+                                                <TableColumn fx:id="requestHeadersValueColumn" text="Value" prefWidth="300">
+                                                </TableColumn>
+                                            </columns>
+                                        </TableView>
+                                        <HBox>
+                                            <padding>
+                                                <Insets top="15" right="12" bottom="15" left="12"/>
+                                            </padding>
+                                            <ComboBox fx:id="cBKeyHeaders" editable="true" styleClass="bg-white">
+
+                                            </ComboBox>
+                                            <ComboBox fx:id="cBValueHeaders" editable="true" styleClass="bg-white">
+
+                                            </ComboBox>
+                                            <Button fx:id="btnAddHeaders" text="Add" styleClass="bg-white"/>
+                                            <Button fx:id="btnClearHeaders" text="Clear" styleClass="bg-white"/>
+                                        </HBox>
+                                    </VBox>
                                 </Tab>
                                 <Tab text="Body">
                                     <content>
