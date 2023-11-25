@@ -17,7 +17,7 @@ import org.koin.core.inject
 import org.kordamp.bootstrapfx.BootstrapFX
 
 class GetManApplication : Application(), Navigator, KoinComponent {
-    private lateinit var primaryStage: Stage
+    lateinit var primaryStage: Stage
     val applicationScope: CoroutineScope
         get() = CoroutineScope(Dispatchers.Main + SupervisorJob())
 

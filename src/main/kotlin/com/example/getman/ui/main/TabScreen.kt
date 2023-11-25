@@ -1,8 +1,10 @@
 package com.example.getman.ui.main
 
+import com.example.getman.GetManApplication
 import com.example.getman.base.Screen
 import com.example.getman.extensions.collectIn
 import com.example.getman.ui.main.model.KeyValueTableModel
+import com.example.getman.utils.BodyEnum
 import com.example.getman.utils.Constants.URL_REGEX_STRING
 import com.example.getman.utils.Constants.commonHeaders
 import com.example.getman.utils.FormatUtils.formatHtml
@@ -17,16 +19,39 @@ import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
+import javafx.stage.FileChooser
 import kotlinx.coroutines.flow.filterNotNull
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.koin.core.inject
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.InvalidObjectException
 
+
 class TabScreen : Screen() {
-    lateinit var cBValueHeaders: ComboBox<Any>
-    lateinit var cBKeyHeaders: ComboBox<Any>
+    lateinit var btnChooseFile: Button
+    lateinit var btnClearFormData: Button
+    lateinit var btnAddFormData: Button
+    lateinit var tfFormDataValue: TextField
+    lateinit var tfFormDataKey: TextField
+    lateinit var formDataValueColumn: TableColumn<KeyValueTableModel, String>
+    lateinit var formDataKeyColumn: TableColumn<KeyValueTableModel, String>
+    lateinit var formDataTable: TableView<KeyValueTableModel>
+    lateinit var jsonTextArea: TextArea
+    lateinit var vBoxForm: VBox
+    lateinit var jsonRadio: RadioButton
+    lateinit var formDataRadio: RadioButton
+    lateinit var noneRadio: RadioButton
+    lateinit var cBValueHeaders: ComboBox<String>
+    lateinit var cBKeyHeaders: ComboBox<String>
     lateinit var btnClearHeaders: Button
     lateinit var btnAddHeaders: Button
     lateinit var requestHeadersValueColumn: TableColumn<KeyValueTableModel, String>
@@ -56,6 +81,7 @@ class TabScreen : Screen() {
     lateinit var btnSend: Button
     lateinit var cbRequest: ChoiceBox<RequestEnum>
     lateinit var closeLabel: Label
+    private var bodyType = BodyEnum.NONE
     override val viewModel by inject<MainViewModel>()
 
     override fun onCreate() {
@@ -70,6 +96,7 @@ class TabScreen : Screen() {
                 : ObservableList<RequestEnum> = FXCollections.observableArrayList(*RequestEnum.values())
         cbRequest.items = requestNames
         cbRequest.value = RequestEnum.GET
+        noneRadio.isSelected = true
         initTableView()
         initComboBox()
     }
@@ -82,6 +109,8 @@ class TabScreen : Screen() {
     private fun initTableView() {
         val keyFactory = PropertyValueFactory<KeyValueTableModel, String>("keyString")
         val valueFactory = PropertyValueFactory<KeyValueTableModel, String>("valueString")
+        formDataKeyColumn.cellValueFactory = keyFactory
+        formDataValueColumn.cellValueFactory = valueFactory
         requestHeadersKeyColumn.cellValueFactory = keyFactory
         requestHeadersValueColumn.cellValueFactory = valueFactory
         cookieKeyColumn.cellValueFactory = keyFactory
@@ -132,9 +161,19 @@ class TabScreen : Screen() {
             val value = cBValueHeaders.value.toString()
             if (key.isNotBlank() && value.isNotBlank()) {
                 requestHeadersTable.items.add(KeyValueTableModel(key, value))
-//                cBKeyHeaders.value = ""
-//                cBValueHeaders.value = ""
             }
+        }
+        btnAddFormData.setOnAction {
+            val key = tfFormDataKey.text
+            val value = tfFormDataValue.text
+            if (key.isNotBlank() && value.isNotBlank()) {
+                formDataTable.items.add(KeyValueTableModel(key, value))
+                tfFormDataKey.text = ""
+                tfFormDataValue.text = ""
+            }
+        }
+        btnClearFormData.setOnAction {
+            formDataTable.items.clear()
         }
         btnSend.setOnAction {
             if (isValidUrl(tfUrl.text)) {
@@ -143,10 +182,35 @@ class TabScreen : Screen() {
                 requestHeadersTable.items.forEach {
                     headers[it.getKeyString()] = it.getValueString()
                 }
-                println(headers)
+                val jsonText = jsonTextArea.text
+
+                val requestBody: RequestBody = when (bodyType) {
+                    BodyEnum.JSON, BodyEnum.NONE -> {
+                        val jsonMediaType: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
+                        jsonText.toRequestBody(jsonMediaType)
+                    }
+                    BodyEnum.FORM_DATA -> {
+                        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                        formDataTable.items.forEach {
+                            if (it.getValueString().startsWith("File: ")) {
+                                val file = File(it.getValueString().replaceFirst("File: ", ""))
+                                val fileBody: RequestBody =
+                                    file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                                builder.addFormDataPart(it.getKeyString(), file.name, fileBody)
+                            } else {
+                                builder.addFormDataPart(it.getKeyString(), it.getValueString())
+                            }
+
+                        }
+                        builder.build()
+                    }
+                }
                 viewModel.request(
                     RequestModel(
-                        url, headers
+                        cbRequest.value,
+                        url,
+                        headers,
+                        requestBody
                     )
                 )
             } else {
@@ -158,6 +222,31 @@ class TabScreen : Screen() {
         }
         btnClearQuery.setOnAction {
             paramTable.items.clear()
+        }
+        noneRadio.setOnAction {
+            vBoxForm.isVisible = false
+            jsonTextArea.isVisible = false
+            bodyType = BodyEnum.NONE
+            jsonTextArea.text = ""
+        }
+        jsonRadio.setOnAction {
+            vBoxForm.isVisible = false
+            jsonTextArea.isVisible = true
+            bodyType = BodyEnum.JSON
+        }
+        formDataRadio.setOnAction {
+            vBoxForm.isVisible = true
+            jsonTextArea.isVisible = false
+            bodyType = BodyEnum.FORM_DATA
+            jsonTextArea.text = ""
+        }
+        btnChooseFile.setOnAction {
+            val fileChooser = FileChooser()
+            fileChooser.title = "Open Resource File"
+            val file = fileChooser.showOpenDialog(GetManApplication.instance.primaryStage)
+            if (file != null) {
+                tfFormDataValue.text = "File: ${file.absolutePath}"
+            }
         }
     }
 
