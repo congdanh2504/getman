@@ -112,9 +112,11 @@
                                                 <VBox visible="false" fx:id="vBoxForm">
                                                     <TableView fx:id="formDataTable">
                                                         <columns>
-                                                            <TableColumn fx:id="formDataKeyColumn" text="Key" prefWidth="200">
+                                                            <TableColumn fx:id="formDataKeyColumn" text="Key"
+                                                                         prefWidth="200">
                                                             </TableColumn>
-                                                            <TableColumn fx:id="formDataValueColumn" text="Value" prefWidth="300">
+                                                            <TableColumn fx:id="formDataValueColumn" text="Value"
+                                                                         prefWidth="300">
                                                             </TableColumn>
                                                         </columns>
                                                     </TableView>
@@ -124,9 +126,12 @@
                                                         </padding>
                                                         <TextField fx:id="tfFormDataKey" styleClass="bg-white"/>
                                                         <TextField fx:id="tfFormDataValue" styleClass="bg-white"/>
-                                                        <Button fx:id="btnAddFormData" text="Add" styleClass="bg-white"/>
-                                                        <Button fx:id="btnClearFormData" text="Clear" styleClass="bg-white"/>
-                                                        <Button fx:id="btnChooseFile" text="Choose a file" styleClass="bg-white"/>
+                                                        <Button fx:id="btnAddFormData" text="Add"
+                                                                styleClass="bg-white"/>
+                                                        <Button fx:id="btnClearFormData" text="Clear"
+                                                                styleClass="bg-white"/>
+                                                        <Button fx:id="btnChooseFile" text="Choose a file"
+                                                                styleClass="bg-white"/>
                                                     </HBox>
                                                 </VBox>
                                                 <TextArea visible="false" fx:id="jsonTextArea"
@@ -134,119 +139,75 @@
                                             </StackPane>
                                         </center>
                                     </BorderPane>
-                                    <!--                                    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">-->
-                                    <!--                                        <tabs>-->
-                                    <!--                                            <Tab text="form-data">-->
-                                    <!--                                                <content>-->
-                                    <!--                                                    <VBox>-->
-                                    <!--                                                        <TableView>-->
-                                    <!--                                                            <columns>-->
-                                    <!--                                                                <TableColumn text="Key" prefWidth="200">-->
-                                    <!--                                                                </TableColumn>-->
-                                    <!--                                                                <TableColumn text="Value" prefWidth="300">-->
-                                    <!--                                                                </TableColumn>-->
-                                    <!--                                                            </columns>-->
-                                    <!--                                                        </TableView>-->
-                                    <!--                                                        <HBox>-->
-                                    <!--                                                            <padding>-->
-                                    <!--                                                                <Insets top="15" right="12" bottom="15" left="12"/>-->
-                                    <!--                                                            </padding>-->
-                                    <!--                                                            <TextField styleClass="bg-white"/>-->
-                                    <!--                                                            <TextField styleClass="bg-white"/>-->
-                                    <!--                                                            <Button text="Add" styleClass="bg-white"/>-->
-                                    <!--                                                            <Button text="Clear" styleClass="bg-white"/>-->
-                                    <!--                                                        </HBox>-->
-                                    <!--                                                    </VBox>-->
-                                    <!--                                                </content>-->
-                                    <!--                                            </Tab>-->
-                                    <!--                                            <Tab text="x-www-form-urlencoded">-->
-                                    <!--                                                <VBox>-->
-                                    <!--                                                    <TableView>-->
-                                    <!--                                                        <columns>-->
-                                    <!--                                                            <TableColumn text="Key" prefWidth="200">-->
-                                    <!--                                                            </TableColumn>-->
-                                    <!--                                                            <TableColumn text="Value" prefWidth="300">-->
-                                    <!--                                                            </TableColumn>-->
-                                    <!--                                                        </columns>-->
-                                    <!--                                                    </TableView>-->
-                                    <!--                                                    <HBox>-->
-                                    <!--                                                        <padding>-->
-                                    <!--                                                            <Insets top="15" right="12" bottom="15" left="12"/>-->
-                                    <!--                                                        </padding>-->
-                                    <!--                                                        <TextField styleClass="bg-white"/>-->
-                                    <!--                                                        <TextField styleClass="bg-white"/>-->
-                                    <!--                                                        <Button text="Add" styleClass="bg-white"/>-->
-                                    <!--                                                        <Button text="Clear" styleClass="bg-white"/>-->
-                                    <!--                                                    </HBox>-->
-                                    <!--                                                </VBox>-->
-                                    <!--                                            </Tab>-->
-                                    <!--                                            <Tab text="raw">-->
-                                    <!--                                                <TextArea-->
-                                    <!--                                                        style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>-->
-                                    <!--                                            </Tab>-->
-                                    <!--                                        </tabs>-->
-                                    <!--                                    </TabPane>-->
                                 </Tab>
                             </tabs>
                         </TabPane>
-                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-                            <tabs>
-                                <Tab fx:id="bodyTab" text="Body">
-                                    <content>
-                                        <StackPane>
-                                            <TabPane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0"
-                                                     tabClosingPolicy="UNAVAILABLE">
-                                                <tabs>
-                                                    <Tab text="Pretty">
-                                                        <content>
-                                                            <TextArea fx:id="prettyTextArea"
+                        <StackPane alignment="TOP_RIGHT">
+                            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                    <Tab fx:id="bodyTab" text="Body">
+                                        <content>
+                                            <StackPane>
+                                                <TabPane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0"
+                                                         tabClosingPolicy="UNAVAILABLE">
+                                                    <tabs>
+                                                        <Tab text="Pretty">
+                                                            <content>
+                                                                <TextArea fx:id="prettyTextArea"
+                                                                          style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
+                                                            </content>
+                                                        </Tab>
+                                                        <Tab text="Raw">
+                                                            <TextArea fx:id="textArea"
                                                                       style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
-                                                        </content>
-                                                    </Tab>
-                                                    <Tab text="Raw">
-                                                        <TextArea fx:id="textArea"
-                                                                  style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
-                                                    </Tab>
-                                                    <Tab text="Preview">
-                                                        <content>
-                                                            <ScrollPane>
-                                                                <WebView fx:id="webview"
-                                                                         style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
-                                                            </ScrollPane>
-                                                        </content>
-                                                    </Tab>
-                                                </tabs>
-                                            </TabPane>
-                                            <ScrollPane visible="false" fx:id="scrollImagePreview">
-                                                <ImageView fx:id="previewImage"/>
-                                            </ScrollPane>
+                                                        </Tab>
+                                                        <Tab text="Preview">
+                                                            <content>
+                                                                <ScrollPane>
+                                                                    <WebView fx:id="webview"
+                                                                             style="-fx-padding: 10; -fx-border-insets: 10; -fx-background-insets: 10;"/>
+                                                                </ScrollPane>
+                                                            </content>
+                                                        </Tab>
+                                                    </tabs>
+                                                </TabPane>
+                                                <ScrollPane visible="false" fx:id="scrollImagePreview">
+                                                    <ImageView fx:id="previewImage"/>
+                                                </ScrollPane>
 
-                                        </StackPane>
+                                            </StackPane>
 
-                                    </content>
-                                </Tab>
-                                <Tab text="Cookie">
-                                    <TableView fx:id="cookieTable">
-                                        <columns>
-                                            <TableColumn fx:id="cookieKeyColumn" text="Key" prefWidth="200">
-                                            </TableColumn>
-                                            <TableColumn fx:id="cookieValueColumn" text="Value" prefWidth="300">
-                                            </TableColumn>
-                                        </columns>
-                                    </TableView>
-                                </Tab>
-                                <Tab text="Headers">
-                                    <TableView fx:id="headersTable">
-                                        <columns>
-                                            <TableColumn fx:id="headerKeyColumn" text="Key" prefWidth="200">
-                                            </TableColumn>
-                                            <TableColumn fx:id="headerValueColumn" text="Value" prefWidth="300">
-                                            </TableColumn>
-                                        </columns>
-                                    </TableView>
-                                </Tab>
-                            </tabs>
-                        </TabPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Cookie">
+                                        <TableView fx:id="cookieTable">
+                                            <columns>
+                                                <TableColumn fx:id="cookieKeyColumn" text="Key" prefWidth="200">
+                                                </TableColumn>
+                                                <TableColumn fx:id="cookieValueColumn" text="Value" prefWidth="300">
+                                                </TableColumn>
+                                            </columns>
+                                        </TableView>
+                                    </Tab>
+                                    <Tab text="Headers">
+                                        <TableView fx:id="headersTable">
+                                            <columns>
+                                                <TableColumn fx:id="headerKeyColumn" text="Key" prefWidth="200">
+                                                </TableColumn>
+                                                <TableColumn fx:id="headerValueColumn" text="Value" prefWidth="300">
+                                                </TableColumn>
+                                            </columns>
+                                        </TableView>
+                                    </Tab>
+                                </tabs>
+                            </TabPane>
+                            <Label alignment="TOP_RIGHT" fx:id="lblResponseDes">
+                                <padding>
+                                    <Insets right="10" top="6"/>
+                                </padding>
+                            </Label>
+
+                        </StackPane>
                     </items>
                 </SplitPane>
             </center>

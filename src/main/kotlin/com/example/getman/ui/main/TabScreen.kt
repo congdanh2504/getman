@@ -23,13 +23,10 @@ import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
 import javafx.stage.FileChooser
 import kotlinx.coroutines.flow.filterNotNull
-import okhttp3.MediaType
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import org.koin.core.inject
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -37,6 +34,7 @@ import java.io.InvalidObjectException
 
 
 class TabScreen : Screen() {
+    lateinit var lblResponseDes: Label
     lateinit var btnChooseFile: Button
     lateinit var btnClearFormData: Button
     lateinit var btnAddFormData: Button
@@ -82,6 +80,7 @@ class TabScreen : Screen() {
     lateinit var cbRequest: ChoiceBox<RequestEnum>
     lateinit var closeLabel: Label
     private var bodyType = BodyEnum.NONE
+    private var startTime: Long = 0
     override val viewModel by inject<MainViewModel>()
 
     override fun onCreate() {
@@ -205,6 +204,7 @@ class TabScreen : Screen() {
                         builder.build()
                     }
                 }
+                startTime = System.currentTimeMillis()
                 viewModel.request(
                     RequestModel(
                         cbRequest.value,
@@ -252,6 +252,10 @@ class TabScreen : Screen() {
 
     private fun bindViewModel() {
         viewModel.response.filterNotNull().collectIn(this) {
+            val responseBodyCopy: ResponseBody = it.peekBody(Long.MAX_VALUE)
+            val responseSize: Long = (it.headers.byteCount() + responseBodyCopy.contentLength()) / 1024
+            val responseTime = System.currentTimeMillis() - startTime
+            lblResponseDes.text = "Status: ${it.code} ${it.message}, Time: $responseTime ms, Size: $responseSize KB"
             handleBody(it)
             handleCookies(it)
             handleHeaders(it)
