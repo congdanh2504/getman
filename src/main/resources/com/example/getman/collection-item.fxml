@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<HBox prefWidth="250" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label fx:id="lblRequestType" text="GET">
+            <padding>
+                <Insets right="10" />
+            </padding>
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblUrl" HBox.hgrow="ALWAYS" maxWidth="200"/>
+        <Pane HBox.hgrow="ALWAYS" />
+        <Button fx:id="btnAdd" text="+" HBox.hgrow="NEVER" styleClass="custom-button" style="-fx-background-color: green"/>
+        <Button fx:id="btnDelete" text="X" HBox.hgrow="NEVER" styleClass="custom-button" style="-fx-background-color: red"/>
+    </children>
+</HBox>

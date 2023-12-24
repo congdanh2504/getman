@@ -3,18 +3,96 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
+           prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.getman.ui.main.MainScreen">
+    <items>
+        <TabPane fx:id="leftTabPane" side="LEFT" minWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER"
+                 tabMinWidth="40" tabMinHeight="40" styleClass="url-pane">
+            <tabs>
+                <Tab fx:id="collectionTab">
+                    <graphic>
+                        <ImageView fx:id="ivCollection" fitWidth="20" fitHeight="20">
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="com.example.getman.ui.main.MainScreen">
-   <center>
-      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab fx:id="addButton" text="+">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </center>
-</BorderPane>
+                        </ImageView>
+                    </graphic>
+                    <content>
+                        <BorderPane>
+                            <top>
+                                <HBox>
+                                    <padding>
+                                        <Insets top="10" left="10" bottom="10"/>
+                                    </padding>
+                                    <children>
+                                        <Button fx:id="newCollection" HBox.hgrow="NEVER" text="New" styleClass="custom-button"/>
+                                        <Button fx:id="importJsonBtn" HBox.hgrow="NEVER" text="Import from JSON" styleClass="custom-button"/>
+                                        <Button fx:id="exportJsonBtn" HBox.hgrow="NEVER" text="Export to JSON" styleClass="custom-button"/>
+                                    </children>
+                                </HBox>
+                            </top>
+                            <center>
+                                <TreeView fx:id="collectionTree" styleClass="custom-tree-view"/>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="historyTab">
+                    <graphic>
+                        <ImageView fx:id="ivHistory" fitWidth="20" fitHeight="20">
+
+                        </ImageView>
+                    </graphic>
+                    <content>
+                        <TreeView fx:id="treeView" styleClass="custom-tree-view"/>
+                    </content>
+                </Tab>
+                <Tab fx:id="testGenTab">
+                    <graphic>
+                        <ImageView fx:id="ivTestGen" fitWidth="20" fitHeight="20">
+
+                        </ImageView>
+                    </graphic>
+                    <content>
+                        <BorderPane>
+                            <top>
+                                <HBox>
+                                    <padding>
+                                        <Insets top="10" left="10" bottom="10"/>
+                                    </padding>
+                                    <children>
+                                        <Button fx:id="btnChooseFile" HBox.hgrow="NEVER" text="Select text file" styleClass="custom-button"/>
+                                    </children>
+                                </HBox>
+                            </top>
+                            <center>
+                                <TableView fx:id="testGenTable"/>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="logoutTab">
+                <graphic>
+                    <ImageView fx:id="ivLogout" fitWidth="20" fitHeight="20">
+                    </ImageView>
+                </graphic>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <BorderPane minWidth="600.0">
+            <center>
+                <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0"
+                         BorderPane.alignment="CENTER" styleClass="url-pane">
+                    <tabs>
+                        <Tab fx:id="addButton" text="+" closable="false" styleClass="plus-tab">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </items>
+</SplitPane>

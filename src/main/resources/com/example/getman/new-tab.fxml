@@ -6,12 +6,9 @@
 <?import javafx.scene.web.WebView?>
 <?import javafx.scene.image.ImageView?>
 <Tab xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.getman.ui.main.TabScreen">
-    <graphic>
-        <HBox alignment="CENTER">
-            <Label text="Untitled tab"/>
-            <Label text=" X" fx:id="closeLabel" style="-fx-text-fill: red;"/>
-        </HBox>
-    </graphic>
+    <text>
+        Untitled tab
+    </text>
     <content>
         <BorderPane>
             <top>
@@ -19,16 +16,17 @@
                     <padding>
                         <Insets top="15" right="12" bottom="15" left="12"/>
                     </padding>
-                    <ChoiceBox fx:id="cbRequest" HBox.hgrow="NEVER" styleClass="bg-white"/>
-                    <TextField fx:id="tfUrl" HBox.hgrow="ALWAYS" styleClass="bg-white"/>
-                    <Button fx:id="btnSend" HBox.hgrow="NEVER" text="Send" styleClass="bg-white"/>
+                    <ChoiceBox fx:id="cbRequest" HBox.hgrow="NEVER"/>
+                    <TextField fx:id="tfUrl" HBox.hgrow="ALWAYS" styleClass="custom-text-field"/>
+                    <Button fx:id="btnSend" HBox.hgrow="NEVER" text="Send" styleClass="custom-button"/>
                 </HBox>
             </top>
             <center>
                 <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
                            BorderPane.alignment="CENTER">
                     <items>
-                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+                                 styleClass="sub-pane">
                             <tabs>
                                 <Tab text="Query Params">
                                     <content>
@@ -45,10 +43,10 @@
                                                 <padding>
                                                     <Insets top="15" right="12" bottom="15" left="12"/>
                                                 </padding>
-                                                <TextField fx:id="tfKey" styleClass="bg-white"/>
-                                                <TextField fx:id="tfValue" styleClass="bg-white"/>
-                                                <Button fx:id="btnAddQuery" text="Add" styleClass="bg-white"/>
-                                                <Button fx:id="btnClearQuery" text="Clear" styleClass="bg-white"/>
+                                                <TextField fx:id="tfKey" styleClass="custom-text-field"/>
+                                                <TextField fx:id="tfValue" styleClass="custom-text-field"/>
+                                                <Button fx:id="btnAddQuery" text="Add" styleClass="custom-button"/>
+                                                <Button fx:id="btnClearQuery" text="Clear" styleClass="custom-button"/>
                                             </HBox>
                                         </VBox>
                                     </content>
@@ -74,8 +72,8 @@
                                             <ComboBox fx:id="cBValueHeaders" editable="true" styleClass="bg-white">
 
                                             </ComboBox>
-                                            <Button fx:id="btnAddHeaders" text="Add" styleClass="bg-white"/>
-                                            <Button fx:id="btnClearHeaders" text="Clear" styleClass="bg-white"/>
+                                            <Button fx:id="btnAddHeaders" text="Add" styleClass="custom-button"/>
+                                            <Button fx:id="btnClearHeaders" text="Clear" styleClass="custom-button"/>
                                         </HBox>
                                     </VBox>
                                 </Tab>
@@ -124,14 +122,16 @@
                                                         <padding>
                                                             <Insets top="15" right="12" bottom="15" left="12"/>
                                                         </padding>
-                                                        <TextField fx:id="tfFormDataKey" styleClass="bg-white"/>
-                                                        <TextField fx:id="tfFormDataValue" styleClass="bg-white"/>
+                                                        <TextField fx:id="tfFormDataKey"
+                                                                   styleClass="custom-text-field"/>
+                                                        <TextField fx:id="tfFormDataValue"
+                                                                   styleClass="custom-text-field"/>
                                                         <Button fx:id="btnAddFormData" text="Add"
-                                                                styleClass="bg-white"/>
+                                                                styleClass="custom-button"/>
                                                         <Button fx:id="btnClearFormData" text="Clear"
-                                                                styleClass="bg-white"/>
+                                                                styleClass="custom-button"/>
                                                         <Button fx:id="btnChooseFile" text="Choose a file"
-                                                                styleClass="bg-white"/>
+                                                                styleClass="custom-button"/>
                                                     </HBox>
                                                 </VBox>
                                                 <TextArea visible="false" fx:id="jsonTextArea"
@@ -143,13 +143,14 @@
                             </tabs>
                         </TabPane>
                         <StackPane alignment="TOP_RIGHT">
-                            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+                                     styleClass="sub-pane">
                                 <tabs>
                                     <Tab fx:id="bodyTab" text="Body">
                                         <content>
                                             <StackPane>
                                                 <TabPane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0"
-                                                         tabClosingPolicy="UNAVAILABLE">
+                                                         tabClosingPolicy="UNAVAILABLE" styleClass="sub-pane">
                                                     <tabs>
                                                         <Tab text="Pretty">
                                                             <content>

@@ -32,7 +32,6 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InvalidObjectException
 
-
 class TabScreen : Screen() {
     lateinit var lblResponseDes: Label
     lateinit var btnChooseFile: Button
@@ -78,10 +77,9 @@ class TabScreen : Screen() {
     lateinit var tfUrl: TextField
     lateinit var btnSend: Button
     lateinit var cbRequest: ChoiceBox<RequestEnum>
-    lateinit var closeLabel: Label
     private var bodyType = BodyEnum.NONE
     private var startTime: Long = 0
-    override val viewModel by inject<MainViewModel>()
+    override val viewModel by inject<TabViewModel>()
 
     override fun onCreate() {
         super.onCreate()
@@ -188,7 +186,7 @@ class TabScreen : Screen() {
                         val jsonMediaType: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
                         jsonText.toRequestBody(jsonMediaType)
                     }
-                    BodyEnum.FORM_DATA -> {
+                    BodyEnum.FORM -> {
                         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
                         formDataTable.items.forEach {
                             if (it.getValueString().startsWith("File: ")) {
@@ -211,6 +209,17 @@ class TabScreen : Screen() {
                         url,
                         headers,
                         requestBody
+                    )
+                )
+                viewModel.addHistory(
+                    com.example.getman.ui.main.model.RequestModel(
+                        url = url,
+                        requestType = cbRequest.value,
+                        params = paramTable.items,
+                        headers = requestHeadersTable.items,
+                        bodyType = bodyType,
+                        formData = formDataTable.items,
+                        body = jsonTextArea.text
                     )
                 )
             } else {
@@ -237,7 +246,7 @@ class TabScreen : Screen() {
         formDataRadio.setOnAction {
             vBoxForm.isVisible = true
             jsonTextArea.isVisible = false
-            bodyType = BodyEnum.FORM_DATA
+            bodyType = BodyEnum.FORM
             jsonTextArea.text = ""
         }
         btnChooseFile.setOnAction {

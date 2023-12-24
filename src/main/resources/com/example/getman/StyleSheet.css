@@ -1,4 +1,222 @@
+* {
+    -fx-primary-color: #687EFF;
+    -fx-secondary-color: #80B3FF;
+    -fx-third-color: #98E4FF;
+    -fx-four-color: #B6FFFA;
+}
+
 .bg-white {
     -fx-background-color: white;
     -fx-border-color: black;
+}
+
+.custom-button {
+    -fx-background-color: -fx-primary-color;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.choice-box {
+    -fx-background-color: -fx-primary-color;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-mark-color: white;
+    -fx-font-weight: bold;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: white;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: -fx-primary-color;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: -fx-primary-color;
+    -fx-font-weight: bold;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: white;
+}
+
+.choice-box .left-container .radio {
+    -fx-background-color: -fx-primary-color;
+}
+
+.choice-box > .label {
+    -fx-text-fill: white;
+}
+
+.custom-text-field {
+    -fx-border-color: -fx-primary-color;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -fx-primary-color;
+    -fx-padding: 0 0 5px 0;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: -fx-primary-color;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(147, 234, 249, 0.07);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #1dbbdd11;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:vertical .track,
+.table-view .virtual-flow .scroll-bar:vertical .track-background,
+.table-view .virtual-flow .scroll-bar:horizontal,
+.table-view .virtual-flow .scroll-bar:horizontal .track,
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar .increment-button,
+.table-view .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to bottom, -fx-third-color, -fx-four-color);
+}
+
+.table-view .virtual-flow .scroll-bar:horizontal .thumb {
+    -fx-background-color: linear-gradient(to right, -fx-third-color, -fx-four-color);
+}
+
+.table-row-cell:focused {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.radio-button {
+    -fx-font-weight: bold;
+}
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: -fx-primary-color;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-padding: 3px;
+}
+
+.radio-button .radio:selected {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+
+.radio-button -radio:armed {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+
+.radio-button -radio:determinate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+
+.radio-button -radio:indeterminate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 4px;
+}
+
+.url-pane .tab:selected {
+    -fx-background-color: -fx-primary-color;
+    -fx-text-base-color: white;
+}
+
+.url-pane {
+    -fx-font-weight: bold;
+    -fx-tab-min-width: 30px;
+}
+
+.url-pane .tab {
+    -fx-background-color: white;
+    -fx-text-base-color: -fx-primary-color;
+}
+
+.plus-tab {
+    -fx-border-radius: 4;
+    -fx-border-color: -fx-primary-color;
+}
+
+.sub-pane .tab-header-area .tab-header-background {
+    -fx-background-color: white;
+}
+
+.sub-pane .tab:selected {
+    -fx-border-color: white;
+    -fx-background-color: -fx-secondary-color;
+    -fx-text-base-color: white;
+}
+
+.sub-pane {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-tab-min-width: 30px;
+    -fx-tab-min-height: 30px;
+    -fx-tab-max-height: 30px;
+}
+
+.sub-pane .tab {
+    -fx-border-color: -fx-secondary-color;
+    -fx-background-color: white;
+    -fx-text-base-color: -fx-secondary-color;
+}
+
+.tree-view:selected {
+    -fx-text-fill: #f30000;
+    -fx-font-weight: bold;
+    -fx-background-color: -fx-secondar-color;
+}
+
+.tree-view {
+    -fx-font-weight: normal;
 }

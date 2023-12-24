@@ -11,5 +11,6 @@
     <property name="show_sql">true</property>
     <property name="format_sql">false</property>
     <mapping class="com.example.getman.data.remote.model.UserEntity"/>
+    <mapping class="com.example.getman.data.remote.model.RequestEntity"/>
 </session-factory>
 </hibernate-configuration>

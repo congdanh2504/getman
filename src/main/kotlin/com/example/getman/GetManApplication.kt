@@ -48,7 +48,7 @@ class GetManApplication : Application(), Navigator, KoinComponent {
     }
 
     override fun navigateToHome() {
-        loadFxml(MainScreen.FXML_VIEW_NAME, 700.0, 500.0, "Main")
+        loadFxml(MainScreen.FXML_VIEW_NAME, "Main")
     }
 
     override fun navigateToRegister() {
